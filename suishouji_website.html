@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>随手记 - 您的贴心笔记伙伴</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --background-start: #f4f7f6;
+            --background-end: #d4e4e2;
+            --text-color: #333;
+            --card-bg: #ffffff;
+            --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            --border-radius: 15px;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, var(--background-start), var(--background-end));
+            color: var(--text-color);
+            line-height: 1.7;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 80px 20px;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-top: 40px;
+        }
+
+        .app-icon {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 20px;
+            border-radius: 22%;
+        }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 700;
+            margin: 0;
+            color: var(--primary-color);
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            color: #555;
+            margin-top: 10px;
+            max-width: 600px;
+        }
+        
+        .download-button {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2em;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+            margin-top: 30px;
+        }
+
+        .download-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.5);
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.12);
+        }
+
+        .card h2 {
+            font-size: 2em;
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--secondary-color);
+            padding-bottom: 10px;
+        }
+
+        .tutorial-step {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .tutorial-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .tutorial-step:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .tutorial-icon {
+            flex-shrink: 0;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f7ff;
+            border-radius: 50%;
+        }
+        
+        .tutorial-icon svg {
+            width: 50px;
+            height: 50px;
+            stroke: var(--primary-color);
+        }
+
+        .tutorial-text h3 {
+            font-size: 1.5em;
+            color: var(--secondary-color);
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            color: #777;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .important-notice {
+            font-weight: bold;
+            color: #c0392b;
+            margin-bottom: 15px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 400px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0; transform: scale(0.9);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5em;
+            }
+            .tutorial-step, .tutorial-step:nth-child(even) {
+                flex-direction: column;
+                text-align: center;
+            }
+            .tutorial-icon {
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="hero">
+            <img src="suishouji_icon.svg" alt="随手记 Logo" class="app-icon">
+            <h1>随手记</h1>
+            <p>一款纯粹、简约的笔记应用，为您的灵感和思绪提供一个安静的栖息地。我们致力于提供最纯粹的记录体验，无广告、无干扰。</p>
+            <a href="#" id="downloadBtn" class="download-button">下载 Android 版</a>
+        </header>
+
+        <main class="main-content">
+            <section id="about" class="card">
+                <h2>关于「随手记」</h2>
+                <p>「随手记」是一个为了学习和探索Android应用开发而创建的个人项目。它的核心设计理念是“简约”与“专注”。在这个信息爆炸的时代，我们希望能有一个地方，可以让我们不受打扰地记录下脑海中一闪而过的灵感、重要的备忘、或是任何值得留下的文字。它不追求功能的繁复，只希望成为您最轻便、最贴心的数字笔记本。</p>
+            </section>
+
+            <section id="privacy" class="card">
+                <h2>隐私与安全</h2>
+                <p>我们深知隐私的重要性，因此「随手记」在设计之初就将您的数据安全放在首位。我们郑重承诺：</p>
+                <ul>
+                    <li><strong>完全离线：</strong> 您的所有笔记数据都只存储在您自己的设备上，应用不会以任何形式连接网络上传您的数据。</li>
+                    <li><strong>无个人信息收集：</strong> 我们不会收集、存储或分享任何您的个人身份信息。您无需注册账户，下载即可使用。</li>
+                    <li><strong>开源透明：</strong> （如果未来开源）项目代码将完全公开，您可以随时审查代码以确认我们的隐私承诺。</li>
+                </ul>
+            </section>
+
+            <section id="tutorial" class="card">
+                <h2>使用教程</h2>
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                    </div>
+                    <div class="tutorial-text">
+                        <h3>第一步：新建笔记</h3>
+                        <p>在主界面点击右下角的“+”按钮，即可快速进入笔记编辑页面，开始您的记录之旅。</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    </div>
+                    <div class="tutorial-text">
+                        <h3>第二步：编辑与保存</h3>
+                        <p>在编辑页面，您可以自由输入文本内容。完成灵感记录后，点击保存按钮，您的笔记就会安全地存储在列表中。</p>
+                    </div>
+                </div>
+                <div class="tutorial-step">
+                    <div class="tutorial-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    </div>
+                    <div class="tutorial-text">
+                        <h3>第三步：查看与管理</h3>
+                        <p>所有笔记都会清晰地陈列在主列表。您可以随时点击查看、编辑或删除任何一条笔记，轻松管理您的思绪。</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p class="important-notice">重要声明：本项目为个人学习与技术实践项目，旨在学习和展示开发技能，不会在任何应用商店上架。本网站是唯一的官方发布渠道。</p>
+            <p>联系我们: <a href="mailto:W15207934356@outlook.com">W15207934356@outlook.com</a></p>
+            <p>&copy; 2025 随手记. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <div id="maintenanceModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>功能开发中</h3>
+            <p>非常感谢您的关注！应用正在全力维护开发中，敬请期待正式版本的发布。</p>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('maintenanceModal');
+        const btn = document.getElementById('downloadBtn');
+        const span = document.getElementsByClassName('close-button')[0];
+
+        btn.onclick = function(e) {
+            e.preventDefault();
+            modal.style.display = 'flex';
+        }
+
+        span.onclick = function() {
+            modal.style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
+
+</body>
+</html>
